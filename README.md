@@ -11,6 +11,8 @@ any company-internal tooling; everything here should work anywhere.
 
 - [`herdr/`](skills/herdr) — using the [herdr](https://herdr.dev) terminal
   workspace manager to drive fleets of coding agents.
+- [`git-workflow/`](skills/git-workflow) — shipping a feature branch: comment
+  hygiene and PR prep.
 
 ## Install
 
@@ -23,6 +25,9 @@ npx skills add arvmaan/skills --list
 
 # Install just the herdr skills
 npx skills add arvmaan/skills --skill herdr-cli --skill herdr-orchestration
+
+# Install just the git workflow skills
+npx skills add arvmaan/skills --skill better-comments --skill ship-it
 
 # Install to a specific agent
 npx skills add arvmaan/skills -a claude-code

@@ -7,7 +7,7 @@ description: "Use whenever the user wants to ship / wrap up / finalize a feature
 
 End-to-end "make this branch shippable and open the PR" runbook. Turns a messy WIP feature branch (many small/cache-bust/debug commits) into **one clean, well-documented, best-practices-compliant, buildable commit** (or a few well-scoped ones), then **opens the PR** via the `gh` CLI with a description that carries the manual-testing evidence and observability summary.
 
-This skill composes with the **`better-comments`** skill, which it applies for the comment/doc-comment audit.
+This skill composes with the **`better-comments`** skill (comment/doc-comment audit) and follows **`calculated-engineering`** throughout: batch the read-only steps below (1, 3, 4, 4b, 7b) into as few tool calls as possible, don't re-run a green build without a code change, and don't pad the PR description beyond the template.
 
 > **Blast radius / confirm first.** Squashing, rebasing, and opening a PR are outward-facing and rewrite history. Confirm the plan with the user before executing (show the commit range and the proposed commit message). The default endpoint is an **opened PR**; only stop earlier if the user has a standing "don't open it yet" constraint — in that case do all prep + build-green and ask before running `gh pr create`. NEVER `git push --force` to the default/main branch.
 

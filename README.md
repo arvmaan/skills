@@ -13,6 +13,8 @@ any company-internal tooling; everything here should work anywhere.
   workspace manager to drive fleets of coding agents.
 - [`git-workflow/`](skills/git-workflow) — shipping a feature branch: comment
   hygiene and PR prep.
+- [`principles/`](skills/principles) — standing behavioral defaults: minimum
+  viable change, surgical edits, and calculated tool/token use.
 
 ## Install
 
@@ -28,6 +30,9 @@ npx skills add arvmaan/skills --skill herdr-cli --skill herdr-orchestration
 
 # Install just the git workflow skills
 npx skills add arvmaan/skills --skill better-comments --skill ship-it
+
+# Install the standing behavioral defaults
+npx skills add arvmaan/skills --skill calculated-engineering
 
 # Install to a specific agent
 npx skills add arvmaan/skills -a claude-code

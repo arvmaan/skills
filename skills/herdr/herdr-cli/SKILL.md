@@ -1,6 +1,6 @@
 ---
 name: herdr-cli
-description: Quick reference for driving the herdr terminal-workspace-manager CLI to create workspaces/worktrees, launch AI coding agents (Claude, Codex, etc.) in panes, and script prompts to them non-interactively. Use whenever a task needs one or more isolated agent workspaces spun up and driven from a script or another agent.
+description: Operate the herdr terminal-workspace CLI. Use when creating or inspecting Herdr workspaces, worktrees, panes, and agent processes, or when another skill needs exact Herdr command patterns.
 ---
 
 # herdr CLI

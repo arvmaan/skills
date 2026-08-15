@@ -1,6 +1,6 @@
 ---
 name: herdr-orchestration
-description: Turns a multi-part task into a fleet of isolated herdr workspaces, each running a coding agent (Claude, Codex, etc.) that catches up on context and reports back independently. Use when a task naturally splits into N largely-independent sub-tasks (one per section of a report, one per module of a migration, one per service in an audit) and you want each sub-task investigated or worked on in parallel without the sub-agents stepping on each other's files.
+description: Run independent, resumable work lanes in isolated herdr workspaces. Use after orchestration identifies multiple substantial deliverables that need durable terminals or separate worktrees. Not for quick research, one-off commands, or tightly coupled edits.
 ---
 
 # herdr Orchestration
@@ -9,6 +9,10 @@ A repeatable pattern for fanning a task out across several `herdr`-managed
 agent workspaces, one per sub-task, then collecting their results. This skill
 assumes the `herdr-cli` skill's command reference; read that first if you
 haven't used `herdr` before.
+
+Use the `orchestrate` skill first to decide whether durable Herdr workspaces
+are warranted. Keep bounded read-only investigations in ordinary workers when
+the active harness provides them.
 
 ## When this applies
 
@@ -106,6 +110,10 @@ A good per-agent prompt includes:
 5. **Any environment quirks specific to that worktree** (missing checkouts,
    setup commands, known-stale reference material to distrust).
 
+Require the deliverable to include conclusions, evidence, files changed,
+checks run and their observed results, unresolved risks, and the recommended
+next action.
+
 Send prompts without `--wait` when kicking off several at once, so you don't
 serialize on each other:
 
@@ -156,14 +164,15 @@ purely exploratory:
 # Keep the branch/checkout (real work to continue or hand off):
 herdr workspace close <workspace_id>          # just closes panes, worktree stays on disk
 
-# Discard entirely (was scratch/research only):
+# Discard only after its output and working tree have been reviewed:
 herdr worktree remove --workspace <workspace_id> --force
 ```
 
 Don't remove a worktree with uncommitted changes you haven't reviewed yet —
 `Read` or `git diff` inside it first. If a sub-task's output should become a
 tracked artifact (a doc, a follow-up plan), copy or commit it out of the
-worktree before removing the checkout.
+worktree before removing the checkout. Workspace deletion is an explicit
+lifecycle decision, not routine cleanup.
 
 ## Common failure modes
 

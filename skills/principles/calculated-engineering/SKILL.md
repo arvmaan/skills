@@ -1,6 +1,6 @@
 ---
 name: calculated-engineering
-description: Core behavioral discipline for any coding or agentic task - think before coding, minimum viable change, surgical edits, verifiable goals, and calculated tool use. Use as a standing default for all code writing/review/refactoring and for any multi-step agent task, not just when explicitly invoked.
+description: Engineering discipline for code changes and reviews. Use for non-trivial implementation, refactoring, bug fixes, or multi-step agent work that benefits from explicit assumptions, minimum viable changes, checkable completion criteria, and deliberate tool use.
 ---
 
 # Calculated Engineering
@@ -49,6 +49,12 @@ Define success criteria. Loop until verified, not until it "looks done."
 - "Add validation" → "write tests for invalid inputs, make them pass."
 - "Fix the bug" → "write a test that reproduces it, make it pass."
 - "Refactor X" → "tests pass before and after."
+- End every plan step with a checkable, exhaustive completion condition.
+- Build a tight feedback loop before fixing a bug: one targeted check that
+  fails on the exact problem.
+- Test behavior through public interfaces. Derive expected values from a spec,
+  worked example, or known-good literal rather than duplicating the
+  implementation in the assertion.
 
 Multi-step task → state a brief plan with a verify step per line:
 ```
@@ -65,6 +71,9 @@ Every tool call costs tokens and time. Spend deliberately, not reflexively.
 - **Grep/search before you read.** Don't load a whole file to find one function - locate it first, read the relevant range.
 - **Don't re-derive what you already know.** If a fact is already in context (a file you just read, a command you just ran), use it - don't re-fetch it "to be sure."
 - **Don't re-run a build/test you haven't changed inputs to.** One clean run is a fact; running it again without a code change is waste.
+- **Treat the environment as a source of truth.** Inspect package scripts,
+  config, directory layout, and `--help` output instead of restating
+  discoverable facts in instructions that can go stale.
 - **Prefer a targeted diff/stat over a full dump.** `git diff --stat`, `grep -n`, or a line-range read beats printing an entire file/log when you only need a slice.
 - **One pass, not three.** Plan the sequence of calls before making them instead of discovering the next one after each result lands.
 - **Stop when you have the answer.** Don't keep investigating "for completeness" once the question is resolved.

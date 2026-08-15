@@ -1,6 +1,6 @@
 ---
 name: ship-it
-description: "Use whenever the user wants to ship / wrap up / finalize a feature and open the pull request — phrases like \"ship it\", \"prep/raise the PR\", \"clean up and put up the review\", \"get this ready to merge\", or after a feature has been built and tested and needs to become reviewable. Takes a messy feature branch and: squashes into one clean commit (or a few well-scoped ones), rebases onto the base branch, audits comments/docs and best practices and observability, removes debug logging, addresses any cleanup the user mentioned this session, gets a green local build, checks integration/e2e test coverage, updates any docs the change makes stale, then opens the PR via the `gh` CLI with a description carrying the manual-testing evidence, and recommends monitoring/alerting for any new metrics. Not for deploying, and not for reviewing someone else's PR."
+description: Finalize a completed feature branch and open its pull request. Use when the user says "ship it," asks to prep or raise a PR, or wants working changes made reviewable. Covers cleanup, spec and standards review, tests, docs, commit history, push, and PR creation. Not for deployment or reviewing someone else's change.
 ---
 
 # Ship It — feature branch to a clean PR
@@ -42,9 +42,22 @@ Apply the **`better-comments`** skill to the feature diff. In short: doc comment
 Audit the diff, not the whole file: `git diff <base>..HEAD -- '*.<ext>'` — for each added function check it has a doc comment (if warranted), and for each added inline comment run the WHY test (restates the what → delete).
 
 ### 4. Best-practices pass
-Quick checklist over the feature diff, adapted to the language(s) in play:
+
+Review the feature diff on two separate axes so one cannot mask the other:
+
+- **Spec:** identify missing or partial requirements, scope creep, and behavior
+  that appears to implement the requirement incorrectly. Cite the source
+  requirement for each finding. If no spec or issue exists, say so.
+- **Standards:** check the repository's own instructions and the engineering
+  checklist below. Cite the relevant local standard for hard violations.
+
+Run these as independent parallel reviews when workers are available, then
+report their findings separately before making fixes.
+
+Standards checklist, adapted to the language(s) in play:
 - Imports/module references at the top of the file, not inline fully-qualified names.
-- No overly broad permissions in any IAM/policy/config touched by the change (wildcard resource/action) — enumerate/scope instead.
+- No overly broad authorization in policy or config touched by the change;
+  scope resources and actions to the capability required.
 - Exceptions/errors caught are logged with context + a metric on real failure paths; no silent catch/swallow.
 - Overrides marked as such where the language supports it; constants marked immutable; no magic numbers without a named constant or comment.
 - Resource cleanup (bounded caches, closed clients/connections, thread/worker-pool shutdown) — no unbounded growth.

@@ -15,6 +15,8 @@ any company-internal tooling; everything here should work anywhere.
   hygiene and PR prep.
 - [`principles/`](skills/principles) — standing behavioral defaults: minimum
   viable change, surgical edits, and calculated tool/token use.
+- [`workflow/`](skills/workflow) — routing substantial work across sessions,
+  workers, worktrees, and handoffs.
 
 ## Install
 
@@ -33,6 +35,9 @@ npx skills add arvmaan/skills --skill better-comments --skill ship-it
 
 # Install the standing behavioral defaults
 npx skills add arvmaan/skills --skill calculated-engineering
+
+# Install the orchestration workflow
+npx skills add arvmaan/skills --skill orchestrate
 
 # Install to a specific agent
 npx skills add arvmaan/skills -a claude-code
@@ -58,3 +63,12 @@ Each `SKILL.md` has YAML frontmatter (`name`, `description`) followed by the
 instructions the agent should follow when the skill is active. See
 [Creating Skills](https://github.com/vercel-labs/skills#creating-skills) for
 the format.
+
+## Influences
+
+The phase-boundary, context-pointer, behavior-level testing, and two-axis
+review ideas in this collection are adapted from
+[Matt Pocock's skills](https://github.com/mattpocock/skills), released under
+the MIT License. See [Third-Party Notices](THIRD_PARTY_NOTICES.md). The
+wording and workflows here are tailored to this provider-neutral collection
+rather than vendored copies.

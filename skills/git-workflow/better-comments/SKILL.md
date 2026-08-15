@@ -1,6 +1,6 @@
 ---
 name: better-comments
-description: "Use when writing or auditing code comments and doc comments (Javadoc, docstrings, JSDoc, etc.) — whenever you add a comment, review a diff for over/under-commenting, or the user says \"comments are too verbose / too long / unnecessary\", \"fix the comments\", \"add docstrings\", or \"clean up the comments\". Enforces a middle ground: keep contract-level doc comments, make inline comments rare and WHY-only, and delete noise. Language-neutral — examples use Java-style doc comments but the rules apply to any language's doc-comment convention. Not for prose docs (README/design docs) — this is about comments that live in source."
+description: Write and audit code comments and API documentation. Use when adding docstrings or comments, reviewing comment quality, or cleaning verbose or stale comments. Preserve public contracts and non-obvious rationale; remove implementation narration. Not for README or design prose.
 ---
 
 # Better Comments

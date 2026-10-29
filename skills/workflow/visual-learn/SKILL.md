@@ -11,6 +11,7 @@ Explain the system as a colleague would to someone joining the project. Build th
 ## Understand the reader and the sources
 
 - Establish what the reader knows, which work they own, and what they need to do next. Use the latest correction when it changes an older assignment.
+- Fold new facts into the main explanation and revise affected tasks or diagrams. Keep the page current; add a separate update history only when the user asks for one.
 - Read the supplied documents and relevant code. Reuse completed research; check missing details that could change the explanation or order of work.
 - State when the sources were checked. Say which decisions are agreed, which changes are implemented, and which ideas are still proposals. Label your own recommendations.
 - Explain disagreements between sources. A working prototype, approval comment, planned date, or assignment does not establish that a feature is deployed.
@@ -53,7 +54,9 @@ Put one `index.html` in a directory dedicated to the page, with inline CSS and p
 
 Avoid adding a framework, build pipeline, remote fonts, analytics, or a dependency for a few controls. Add files only when they make the page easier to maintain.
 
-Choose a few colors and readable text sizes that suit the subject. Give the main diagram room. Use charts when they explain something, and avoid turning every paragraph into a card.
+Follow the user's visual brief across the whole page. Remake a rejected design, including its layout and navigation. Give the main diagram room, keep text easy to scan, and use charts when they explain something.
+
+When the user asks for a desktop application style, use a compact title bar, restrained sidebar, and spacious main area with a clear text hierarchy. Subtle borders, soft shadows, rounded corners, compact controls, and a focused accent can support that style. If they request light and dark themes, warm off-white and deep navy or indigo are useful starting points. Keep dense information readable on smaller screens; avoid oversized marketing headers and repeating the same card layout for every section.
 
 Serve only the page's directory. Bind to `127.0.0.1`, the address for this machine (loopback), so the server is not directly reachable from other machines:
 

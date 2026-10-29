@@ -16,7 +16,7 @@ any company-internal tooling; everything here should work anywhere.
 - [`principles/`](skills/principles) — standing behavioral defaults: minimum
   viable change, surgical edits, and calculated tool/token use.
 - [`workflow/`](skills/workflow) — routing substantial work across sessions,
-  workers, worktrees, and handoffs.
+  workers, worktrees, and handoffs; interactive visual learning and onboarding.
 
 ## Install
 
@@ -38,6 +38,9 @@ npx skills add arvmaan/skills --skill calculated-engineering
 
 # Install the orchestration workflow
 npx skills add arvmaan/skills --skill orchestrate
+
+# Install the visual learning workflow
+npx skills add arvmaan/skills --skill visual-learn
 
 # Install to a specific agent
 npx skills add arvmaan/skills -a claude-code

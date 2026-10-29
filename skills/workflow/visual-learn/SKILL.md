@@ -1,71 +1,82 @@
 ---
 name: visual-learn
-description: Build a digestible, interactive learning page from project documents, code, or research. Use when the user asks for “visual learn,” visual onboarding, a system picture, clickable diagrams, background knowledge, or an ordered task plan explained through a minimal locally hosted HTML page.
+description: Help someone learn a project or system through a clear, interactive HTML page. Use when the user asks for “visual learn,” visual onboarding, clickable diagrams, background explanations, or a task plan they can explore in their browser.
 compatibility: Filesystem tools and Python 3; an available browser tool helps verify rendering.
 ---
 
 # Visual learn
 
-Turn evidence into a small learning experience that helps the reader understand the system and decide what to do next. Use the actual requested artifact as the first pilot; tune the skill from feedback on that artifact.
+Explain the system as a colleague would to someone joining the project. Build the page the user asked for, then improve it from their feedback.
 
-## Establish the learning goal
+## Understand the reader and the sources
 
-- Infer the reader's role, prior knowledge, ownership, and intended next action from the conversation. Honor corrections before older documents.
-- Read the supplied sources and relevant code. Reuse research already completed; investigate gaps that could change the explanation or task order.
-- State the evidence date. Distinguish settled decisions, implementation evidence, proposals, and your recommendations.
-- Reconcile conflicting documents visibly. Do not turn a POC, “ship it” comment, planned date, or assigned task into proof of production completion.
-- Cite the sources near the claims and components they support. Keep restricted sources within the user's authorized local environment.
+- Establish what the reader knows, which work they own, and what they need to do next. Use the latest correction when it changes an older assignment.
+- Read the supplied documents and relevant code. Reuse completed research; check missing details that could change the explanation or order of work.
+- State when the sources were checked. Say which decisions are agreed, which changes are implemented, and which ideas are still proposals. Label your own recommendations.
+- Explain disagreements between sources. A working prototype, approval comment, planned date, or assignment does not establish that a feature is deployed.
+- Link sources beside the claims and components they explain. Keep restricted material in a location the user is authorized to access.
 
-## Design the learning sequence
+## Explain the project in a useful order
 
-Start with the useful picture, then reveal enough detail to act:
+Give the reader the overall picture before asking them to learn individual components:
 
-1. Explain the goal and the user's ownership in a few sentences.
-2. Show a system map with the user's components highlighted, dependencies labeled, and storage or service boundaries visible.
-3. Provide an ordered task plan. Define priorities, dependencies, outputs, and done criteria; separate source deadlines from recommended execution order. Put shared contracts and early consultations ahead of dependent implementation.
-4. Walk one concrete example through the system. Show what changes, what stays, when readers see the change, and what happens on failure or retry.
-5. Reveal prerequisite concepts, a concise glossary, known limits, code reading pointers, and unresolved decisions.
+1. Explain what the project achieves and which part the user owns.
+2. Draw the system. Highlight their components, show what passes between them, and mark where services or storage systems are separate.
+3. List tasks in the order you recommend doing them. For each task, explain what to produce, what it depends on, and how to tell it is finished. Keep documented deadlines separate from your recommended order. Agree shared inputs and outputs before building components that use them.
+4. Follow one concrete example through the system. Show what each component does, when users see the result, and how the system handles a failure or retry.
+5. Add the background needed to understand that example: unfamiliar terms, relevant code, known limits, and decisions still to be made.
 
-For each concept, connect **what it is → why it matters here → what the reader must do with it**. Define unfamiliar terms at first use. Expandable detail should make the default page easier to digest, not hide required work.
+Put optional detail behind expandable sections. Keep required work and important qualifications visible.
 
-## Make interactions teach
+## Write so a newcomer can follow
 
-- Prefer two or three purposeful interactions: click a component for its contract, step an example forward, or reveal a task's acceptance criteria.
-- Use diagrams for relationships, dependency graphs for ordering, and timelines for dates. Choose the smallest visual that answers the reader's question.
-- Show success and failure boundaries. Distinguish logical publication from physical cleanup when they differ.
-- Label simulations as illustrative. Never imply that a toy example establishes scale, a production guarantee, or measured performance.
-- Keep controls keyboard accessible. Use real buttons, links, labels, and native `details`/`summary`; expose selection and status text accessibly.
-- Keep core content readable without interaction. Use clear focus styling, sufficient contrast, responsive layout, and reduced motion.
+Name the actor and explain what it does. For example: “The metadata service publishes the replacement file. A cleanup worker deletes the old file later.” This helps the reader see that publication and deletion are separate events.
 
-## Build the smallest page
+Keep technical terms when they identify something the reader needs to learn, but explain each term at first use. Replace compressed noun phrases with sentences that show the relationship. Use headings that tell the reader what the section explains.
 
-Use a dedicated output directory containing one `index.html` with inline CSS and plain JavaScript. Native HTML, CSS, and SVG are enough for most learning pages. Reuse an existing project component when one is already present.
+Let the idea determine sentence and paragraph length. Split a paragraph when it changes topic; let a simple point stay short. Avoid giving every paragraph the same explanation/example/summary pattern or repeating “why this matters.” Connect ideas directly and use examples when they clarify a real question.
 
-Avoid a framework, build pipeline, CDN, remote fonts, analytics, or a new dependency for a few controls. Add files only when they make the result simpler to maintain. Keep explanatory content separate from unnecessary implementation detail.
+Make claims concrete and attributable. Preserve names, dates, numbers, technical details, and qualifications during a rewrite: “may” must not quietly become “will.” Do not invent experience, evidence, or results to make the prose sound natural.
 
-Choose a compact palette and type scale grounded in the subject. Give the main diagram the visual emphasis; keep prose and supporting controls quiet. Avoid repetitive cards and decorative charts.
+## Choose interactions that explain the system
 
-Serve only the dedicated artifact directory:
+- Prefer a few useful controls: click a component to see its inputs and outputs, step an example forward, or expand a task to see how it will be checked.
+- Use diagrams to show relationships, a dependency graph to show which tasks must happen first, and a timeline to show dates.
+- Show what success and failure look like. If making a result visible and deleting old data happen separately, show both events.
+- Label simulations as examples. They do not establish production behavior, scale, or measured performance.
+- Use real buttons, links, labels, and native `details`/`summary`. Make controls work with a keyboard and make the selected item and status readable by assistive technology.
+- Keep the main explanation readable without clicking. Use visible keyboard focus, sufficient contrast, layouts that fit smaller screens, and reduced motion.
+
+## Build and serve the page
+
+Put one `index.html` in a directory dedicated to the page, with inline CSS and plain JavaScript. HTML, CSS, and SVG are enough for most explanations. Reuse a suitable component if the project already has one.
+
+Avoid adding a framework, build pipeline, remote fonts, analytics, or a dependency for a few controls. Add files only when they make the page easier to maintain.
+
+Choose a few colors and readable text sizes that suit the subject. Give the main diagram room. Use charts when they explain something, and avoid turning every paragraph into a card.
+
+Serve only the page's directory. Bind to `127.0.0.1`, the address for this machine (loopback), so the server is not directly reachable from other machines:
 
 ```sh
 python3 -m http.server 8765 --bind 127.0.0.1 --directory /absolute/path/to/artifact
 ```
 
-Check that the port is available and retain the process handle or PID. For a remote devbox, give the actual hostname and SSH forwarding command:
+Check that the port is available and record the server's process ID so it can be stopped later. If it runs on a remote machine, give the actual hostname and an SSH command that forwards the port:
 
 ```sh
 ssh -N -L 8765:127.0.0.1:8765 user@remote-host
 ```
 
-Then provide `http://127.0.0.1:8765/`. Never widen the bind to make access convenient, serve the workspace root, or claim the page was opened in the user's browser.
+Then provide `http://127.0.0.1:8765/`. Keep the server bound to loopback and serve only the page's directory. Do not claim you opened it in the user's browser.
 
-## Verify and iterate
+## Check the result and improve it
 
-- Confirm HTTP success and a loopback listener.
-- Leave one small behavioral check for nontrivial controls: selection changes the right explanation, step navigation stays in bounds, and a reset restores the example.
-- If browser tooling is available, inspect desktop and mobile rendering and check interaction, keyboard focus, overflow, and console errors. Otherwise state that visual verification was unavailable.
-- Review factual claims against sources, ownership against the latest user instruction, and every task against its dependency and done criteria.
-- Deliver the working page URL, remote access instructions if needed, editable file and skill paths, and concise limits of verification.
-- Ask for feedback on clarity, task order, and interactions through the normal conversation. Improve those specific issues before adding features. Run broader skill benchmarks only when requested or needed to resolve a demonstrated weakness.
+- Confirm that the page loads over HTTP and the server listens only on loopback.
+- Leave one small check for interactive behavior: selecting an item changes the correct explanation, steps stay within the example, and reset restores its starting state.
+- If a browser is available, inspect desktop and mobile layouts, try the controls and keyboard navigation, and check for overflow and console errors. Say when you could not inspect the page visually.
+- Read the main explanations as if you were saying them to the reader. Rewrite awkward phrases, remove repeated conclusions, and check that the sequence makes sense to someone who does not already know the system.
+- After editing, compare names, dates, numbers, claims, and qualifications with the sources. Check ownership against the latest user instruction and each task against its dependencies and completion conditions.
+- Provide the page URL, any remote access instructions, editable file and skill paths, and what you did and did not verify.
+- Use feedback on clarity, task order, and controls to guide the next revision. Run broader skill benchmarks only when requested or needed to investigate a demonstrated problem.
 
 Install or publish the skill only within the user's authorized scope; do not change global skill configuration as an incidental step.
